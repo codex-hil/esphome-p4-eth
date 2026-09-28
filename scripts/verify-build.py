@@ -30,6 +30,14 @@ artifacts = {}
 for name in ('firmware.factory.bin', 'firmware.ota.bin', 'firmware.elf'):
     f = a.build_dir / 'build' / name
     artifacts[name] = {'bytes': f.stat().st_size, 'sha256': hashlib.sha256(f.read_bytes()).hexdigest()}
+# The factory image starts at flash address 0, with a P4 bootloader at 0x2000.
+factory = (a.build_dir / 'build/firmware.factory.bin').read_bytes()
+for offset, relative in ((0x2000, 'bootloader/bootloader.bin'),
+                         (0x8000, 'partition_table/partition-table.bin'),
+                         (0x9000, 'ota_data_initial.bin'), (0x10000, 'p4-eth.bin')):
+    content = (a.build_dir / 'build' / relative).read_bytes()
+    if factory[offset:offset + len(content)] != content:
+        raise SystemExit(f'FAIL: factory layout mismatch at {offset:#x}: {relative}')
 result = {'status': 'PASS_BUILD_ONLY', 'profile': a.profile,
           'checked_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
           'esphome': '2026.9.0', 'idf': '5.5.5', 'sdkconfig': expect,

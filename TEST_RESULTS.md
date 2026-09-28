@@ -9,7 +9,7 @@ is planned for tomorrow. No hardware pass can be inferred from these builds.
 | ESPHome builds, production >=3.0 | PASS | logs/build-production.log; manifests/build-production.json |
 | ESPHome builds, engineering sample <3.0 | PASS | logs/build-es.log; manifests/build-es.json |
 | GPIO profile YAML validation | PASS | logs/config-gpio.log |
-| Rebuild from clean checkout/state | PENDING | Clean reproduction in progress |
+| Rebuild from clean checkout/state | PASS | logs/clean-reproduction.log; manifests/build-clean.json; isolated checkout esphome-p4-eth-clean-20260928 |
 | USB flash | NOT RUN | Board absent |
 | Reliable boot and serial logger | NOT RUN | Board absent |
 | PHY initialization and link | NOT RUN | Board absent |
@@ -22,7 +22,9 @@ is planned for tomorrow. No hardware pass can be inferred from these builds.
 | USB-disconnected operation | NOT RUN | Independent supply pending |
 | PoE-only API/MQTT/OTA | NOT RUN | PD module + compatible PSE presence unknown |
 
-Builds use public compile fixtures, not deployable credentials. The host scripts
+Builds use public compile fixtures, not deployable credentials. The factory-image layout has also been checked against its bootloader, partition
+table, OTA data and app segments. Host mDNS discovery ran before connection and
+observed no ESPHome service (not a device-test result). The host scripts
 have been checked for imports/CLI operation only; their real-device behaviour
 remains unvalidated until executed against the board. No source patches/external
 components. Configuration choices are documented in docs/SUPPORT.md.

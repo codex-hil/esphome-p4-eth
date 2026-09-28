@@ -1,0 +1,14 @@
+{
+  "scope": "software preparation only; no P4 attached",
+  "clean_source_commit": "941ffda",
+  "clean_state": "fresh isolated HOME, build, data and IDF copy; shared immutable Nix store",
+  "logs": {
+    "logs/build-production.log": "4b4f11c9d43d8f35ecccb5b958120b825292edb78d36768aca4b79905418ca6b",
+    "logs/build-es.log": "fb780f59613ee56d23822d884f5feff8d740de00c85d7c9b2db7989add4be69e",
+    "logs/clean-reproduction.log": "f08a8fda4cd9a9a0dd9d998bb588892f266db08de1fb43fa1cc9881bc8a5ef61",
+    "logs/config-gpio.log": "09f50daeae443fa99b065b51e442ed3859031d65aca0890977a3e635ccff3dad",
+    "logs/host_inventory.log": "e8def0a18e22b4385b2ee83d83387b561c0e1962257bbce09043bec45ef14f9f",
+    "logs/mdns-before-board.log": "d1cbd355442709ed6f0df394630ec41193f5352db5504a7c03c66d5bb8aa2d8a",
+    "logs/application-image-info.log": "13d9ccb12f786299f05fc6b255f28182b15165d34b22ac2a308b05509a2fcfcd"
+  }
+}

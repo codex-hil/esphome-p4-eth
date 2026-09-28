@@ -35,7 +35,15 @@ chmod 600 secrets.yaml
 For compilation without a board/broker, `cp secrets.example.yaml secrets.yaml`
 provides explicitly public test credentials and a TEST-NET broker address. The
 preparation builds use those fixtures. **Replace the fixture with generated
-private credentials and rebuild before flashing.** Firmware embeds credentials;
+private credentials and rebuild before flashing.** For the prepared fixture:
+
+```bash
+mv secrets.yaml .state/compile-fixture.local.yaml
+./scripts/init-secrets.py
+# Now edit MQTT settings locally, then rebuild.
+```
+
+Firmware embeds credentials;
 keep `.state/`, `.esphome/`, `secrets.yaml` and firmware out of Git.
 
 Use `device-es.yaml` for ROM-detected chip revision <3.0. Use `device.yaml` for
@@ -87,15 +95,20 @@ Do not run two serial readers at once. Preserve raw output before interpreting i
 If auto-download fails, first check port identity, permission, cable and competing
 readers. Manual download: hold BOOT, press/release RST, then release BOOT and retry
 the same upload. If needed, use ESPHome's generated factory image with esptool
-**after confirming its layout via image-info**:
+**after checking the factory layout and application image**:
 
 ```bash
 FACTORY=.state/nix/build/p4-eth/build/firmware.factory.bin
-./scripts/esphome --python -m esptool --chip esp32p4 image-info "$FACTORY"
+./scripts/esphome --python scripts/verify-build.py .state/nix/build/p4-eth \
+  --profile production  # use es for the ES silicon profile
+./scripts/esphome --python -m esptool --chip esp32p4 \
+  image-info .state/nix/build/p4-eth/build/firmware.ota.bin
 ./scripts/esphome --python -m esptool --chip esp32p4 --port "$PORT" \
   write-flash 0x0 "$FACTORY"
 ```
 
+The layout checker compares each segment against the merged factory image.
+`image-info` accepts the OTA application image, not the padded factory image.
 The combined factory binary includes the correct P4 bootloader offset; do not
 flash an OTA binary at 0. Never use `--force`, eFuse/OTP writes, secure boot,
 flash encryption or JTAG disablement. No full flash erase is normally necessary.
@@ -109,7 +122,7 @@ The profile has no static address, so a nonzero assigned address should also be
 corroborated by DHCP logs/capture or the router's lease table.
 
 ```bash
-./scripts/esphome discover
+./scripts/esphome --python scripts/discover.py
 # Read actual values from serial + router lease table, never guess:
 IP=REPLACE_WITH_DHCP_ADDRESS
 MAC=REPLACE_WITH_DEVICE_MAC

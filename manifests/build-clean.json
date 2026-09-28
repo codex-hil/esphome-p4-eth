@@ -1,0 +1,32 @@
+{
+  "status": "PASS_BUILD_ONLY",
+  "profile": "production",
+  "checked_utc": "2026-09-28T21:04:24.441316+00:00",
+  "esphome": "2026.9.0",
+  "idf": "5.5.5",
+  "sdkconfig": {
+    "CONFIG_IDF_TARGET": "\"esp32p4\"",
+    "CONFIG_ESPTOOLPY_FLASHSIZE": "\"16MB\"",
+    "CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ": "400",
+    "CONFIG_ESP_REV_MIN_FULL": "300",
+    "CONFIG_ETH_USE_ESP32_EMAC": "y",
+    "CONFIG_ETH_PHY_INTERFACE_RMII": "y",
+    "CONFIG_ESP_CONSOLE_UART_NUM": "0"
+  },
+  "sdkconfig_sha256": "7cf4c8f13a93f418d7d0b9be1adc3998d6a731b33eb229d4e7f0e6ac7db47c4f",
+  "artifacts": {
+    "firmware.factory.bin": {
+      "bytes": 796784,
+      "sha256": "f2812c449baa85bdf0d6d8120901c617f8ea453ae8754e1fb46a705c8c1beb7a"
+    },
+    "firmware.ota.bin": {
+      "bytes": 731248,
+      "sha256": "8f78fc5a9ee998364fd21c581ce63aa5ba37ab353f7e62bb6c42b8aa2adac7bb"
+    },
+    "firmware.elf": {
+      "bytes": 16747000,
+      "sha256": "de662db11cfb813f56b929565e931e3acb5aadf904a572023ea6ed69ccdc20fb"
+    }
+  },
+  "hardware_tests": "NOT_RUN"
+}
