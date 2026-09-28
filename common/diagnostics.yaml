@@ -1,0 +1,45 @@
+debug:
+  update_interval: 30s
+
+sensor:
+  - platform: uptime
+    name: Uptime
+    state_topic: controllers/${device_name}/diagnostics/uptime
+    update_interval: 10s
+
+text_sensor:
+  - platform: ethernet_info
+    ip_address:
+      name: IP Address
+      state_topic: controllers/${device_name}/diagnostics/ip
+    mac_address:
+      name: MAC Address
+      state_topic: controllers/${device_name}/diagnostics/mac
+  - platform: version
+    name: ESPHome Version
+    state_topic: controllers/${device_name}/diagnostics/esphome
+  - platform: template
+    name: Build
+    lambda: return {"${build_label}"};
+    state_topic: controllers/${device_name}/diagnostics/build
+    update_interval: 10s
+  - platform: debug
+    reset_reason:
+      name: Reset Reason
+      state_topic: controllers/${device_name}/diagnostics/reset_reason
+
+binary_sensor:
+  - platform: template
+    name: Ethernet Connected
+    # is_connected means IP connectivity, not raw PHY carrier.
+    lambda: return id(eth).is_connected();
+    state_topic: controllers/${device_name}/diagnostics/ethernet_connected
+    entity_category: diagnostic
+
+button:
+  - platform: restart
+    name: Restart
+    command_topic: controllers/${device_name}/command/restart
+  - platform: safe_mode
+    name: Restart in Safe Mode
+    command_topic: controllers/${device_name}/command/safe_mode

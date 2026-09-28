@@ -1,0 +1,11 @@
+# Waveshare schematic U10 IP101GRI, page 1; see docs/HARDWARE.md.
+ethernet:
+  id: eth
+  type: IP101
+  mdc_pin: GPIO31
+  mdio_pin: GPIO52
+  phy_addr: 0
+  power_pin: GPIO51
+  clk:
+    pin: GPIO50
+    mode: CLK_EXT_IN

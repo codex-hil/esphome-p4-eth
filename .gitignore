@@ -1,0 +1,9 @@
+secrets.yaml
+*.local.*
+.reference/
+.state/
+.esphome/
+__pycache__/
+logs/*
+!logs/README.md
+!logs/*.pending

@@ -1,0 +1,3 @@
+packages:
+  base: !include device-es.yaml
+  gpio_test: !include common/gpio-test.yaml

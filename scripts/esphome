@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+root=$(cd "$(dirname "$0")/.." && pwd)
+if [[ ${HIL_NIX_ACTIVE:-} != 1 ]]; then
+  exec "$root/scripts/nix-exec.sh" "$0" "$@"
+fi
+exec python3 "$root/scripts/cli.py" "$@"

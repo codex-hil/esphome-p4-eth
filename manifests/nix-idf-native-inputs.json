@@ -1,0 +1,22 @@
+{
+  "framework": {
+    "url": "https://github.com/esphome-libs/esp-idf/releases/download/v5.5.5/esp-idf-v5.5.5.tar.xz",
+    "hash": "sha256-2Glt8hcxRndaxOXADPY+6Gx+BMIxUw20DzSkNiy+dpo="
+  },
+  "tools": [
+    {
+      "name": "riscv32-esp-elf",
+      "version": "esp-14.2.0_20260121",
+      "sha256": "b3fce4b04dd15a9f0ed1c209b5a2f389c04eff92ed85e4cc0ebc275b7d95e95a",
+      "size": 292412032,
+      "url": "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20260121/riscv32-esp-elf-14.2.0_20260121-x86_64-linux-gnu.tar.xz"
+    },
+    {
+      "name": "esp-rom-elfs",
+      "version": "20241011",
+      "sha256": "921f000164a421c7628fbfee55b173384aafaa51883adc65cd27bf9b0af9e9a9",
+      "size": 3540038,
+      "url": "https://github.com/espressif/esp-rom-elfs/releases/download/20241011/esp-rom-elfs-20241011.tar.gz"
+    }
+  ]
+}

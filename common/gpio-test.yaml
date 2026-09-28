@@ -1,0 +1,9 @@
+# Optional: confirm bare board, header orientation and GPIO2 wiring first.
+# GPIO2 is P1 contact 15 on the official schematic (not RPi numbering).
+switch:
+  - platform: gpio
+    name: GPIO2 Test
+    pin: GPIO2
+    restore_mode: ALWAYS_OFF
+    command_topic: controllers/${device_name}/command/gpio2
+    state_topic: controllers/${device_name}/diagnostics/gpio2

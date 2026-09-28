@@ -1,0 +1,67 @@
+substitutions:
+  device_name: p4-eth
+  build_label: bringup-001
+  # Select from esptool chip-id before flashing. This default is NOT detection.
+  engineering_sample: 'false'
+  cpu_frequency: 400MHz
+
+esphome:
+  name: ${device_name}
+  friendly_name: P4 Ethernet Controller
+  min_version: 2026.9.0
+  project:
+    name: codex-hil.waveshare-p4-eth
+    version: ${build_label}
+
+esp32:
+  variant: esp32p4
+  engineering_sample: ${engineering_sample}
+  # Physical flash: 32MB per schematic. Use 16MB for non-experimental OTA.
+  flash_size: 16MB
+  cpu_frequency: ${cpu_frequency}
+  framework:
+    type: esp-idf
+    version: 5.5.5
+    sdkconfig_options:
+      CONFIG_ESP32P4_REV_MIN_300: y
+
+# Initial networking bring-up does not require PSRAM.
+logger:
+  hardware_uart: UART0
+  baud_rate: 115200
+  level: DEBUG
+
+packages:
+  ethernet: !include common/ethernet.yaml
+  diagnostics: !include common/diagnostics.yaml
+
+api:
+  encryption:
+    key: !secret api_encryption_key
+  # MQTT-only use must not cause periodic restarts.
+  reboot_timeout: 0s
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+safe_mode:
+
+mqtt:
+  broker: !secret mqtt_broker
+  port: !secret mqtt_port
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  topic_prefix: controllers/${device_name}
+  discovery: false
+  reboot_timeout: 0s
+  birth_message:
+    topic: controllers/${device_name}/availability
+    payload: online
+  will_message:
+    topic: controllers/${device_name}/availability
+    payload: offline
+  shutdown_message:
+    topic: controllers/${device_name}/availability
+    payload: offline
+  log_topic: null

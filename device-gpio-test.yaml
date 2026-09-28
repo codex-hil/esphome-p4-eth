@@ -1,0 +1,4 @@
+# Only use after confirming GPIO2 is unconnected except for the test instrument.
+packages:
+  base: !include device.yaml
+  gpio_test: !include common/gpio-test.yaml

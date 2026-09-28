@@ -1,0 +1,11 @@
+# Pre-rev3 silicon ONLY. Confirm via esptool before selecting this file.
+packages:
+  base: !include device.yaml
+substitutions:
+  engineering_sample: 'true'
+  cpu_frequency: 360MHz
+esp32:
+  framework:
+    sdkconfig_options:
+      CONFIG_ESP32P4_REV_MIN_300: n
+      CONFIG_ESP32P4_REV_MIN_0: y

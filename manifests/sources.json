@@ -1,0 +1,12 @@
+{
+  "schematic": {
+    "url": "https://files.waveshare.com/wiki/ESP32-P4-ETH/ESP32-P4-ETH-datasheet.pdf",
+    "sha256": "97ef61a7786706296baafa623a7f053c1e616c4e1503375d76f654435d794e85",
+    "drawing_revision": "1.1",
+    "actual_board_revision": null
+  },
+  "vendor_examples_revision": "6f78fa810ec505048c1941e3d09cefc9f29129bd",
+  "esphome": "2026.9.0",
+  "esp_idf": "5.5.5",
+  "hardware_status": "NOT_CONNECTED"
+}
