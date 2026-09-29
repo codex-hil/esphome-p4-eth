@@ -4,7 +4,9 @@
 The measured PHY address is **1**, not the initial schematic-derived assumption 0.
 Ethernet (100Mb/s full duplex), DHCP, host ping, native API and MQTT restart have
 passed. See [TEST_RESULTS.md](TEST_RESULTS.md) for OTA and remaining GPIO/power gates.
-Publication to `codex-hil/esphome-p4-eth` remains deferred until acceptance.
+Repository: [codex-hil/esphome-p4-eth](https://github.com/codex-hil/esphome-p4-eth).
+This is a bring-up configuration with incomplete physical acceptance, not a fully
+validated controller release.
 
 Base functionality: Ethernet/DHCP, UART logging, encrypted native API,
 authenticated OTA, MQTT diagnostics and restart, and safe mode. No Wi-Fi,
@@ -22,7 +24,8 @@ RISC-V GCC 14.2.0 / esp-14.2.0_20260121, and MQTT client/broker tools. Initial
 Nix downloads and IDF component downloads need Internet access.
 
 ```bash
-cd /home/codex-hil/esphome-p4-eth  # or your fresh checkout
+git clone https://github.com/codex-hil/esphome-p4-eth.git
+cd esphome-p4-eth
 ./scripts/nix-exec.sh true       # instantiate pinned environment
 ./scripts/esphome version
 ./scripts/init-secrets.py        # refuses to overwrite secrets.yaml
@@ -244,12 +247,11 @@ A successful clean build is not a physical acceptance claim.
 ./scripts/reproduce.sh /absolute/path/to/new-checkout
 ```
 
-Before publication: complete all applicable TEST_RESULTS gates, replace pending
-markers with real logs, finalize hardware identity/settings, review hashes and
-scan tracked content for secrets. Then create the requested GitHub repository
-on the authorized `codex-hil` account. Do not publish firmware/credentials/raw LAN
-captures. User requested publication after completion, so it is deferred while
-physical tests are pending.
+Before declaring full hardware acceptance, complete the applicable TEST_RESULTS
+gates and replace pending markers with actual observations. The repository includes
+configuration, tooling and reviewed results; credentials, firmware, photographs
+and raw LAN captures remain local. Publication does not imply the remaining
+GPIO, cold-start, independent-power or PoE tests passed.
 
 ## Current local deployment (2026-09-29)
 

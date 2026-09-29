@@ -101,10 +101,11 @@ count. Record file/timestamp references and investigate every intermittent failu
 2. Measure GPIO2 HIGH/LOW with an independent instrument using the optional test profile.
 3. Remove all supply power for 10 genuine cold starts; record each boot and services.
 4. Test independent power with USB disconnected; if PoE is available, repeat including OTA using Ethernet cable only.
-5. Finalize the base configuration and publish the requested repository after applicable acceptance gates pass.
+5. Restore and finalize the base configuration after measurement; record the remaining acceptance results in the repository.
 
-No GitHub publication has occurred. Access to account codex-hil is available;
-publication is deferred because the user requested it after completion.
+Repository: https://github.com/codex-hil/esphome-p4-eth. Configuration is shared
+with the physical acceptance gaps above explicitly retained. Publication is not
+a claim of complete hardware validation.
 
 ## Photograph and GPIO preparation update
 
