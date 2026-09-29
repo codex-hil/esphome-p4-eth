@@ -1,10 +1,10 @@
 # Waveshare ESP32-P4-ETH / ESPHome controller base
 
-**Preparation only: hardware has not arrived. Do not call this a working board.**
-See [TEST_RESULTS.md](TEST_RESULTS.md) for demonstrated results and remaining gates.
-The user plans to connect USB + Ethernet next session. Publication to
-`codex-hil/esphome-p4-eth` is requested after physical acceptance; no repository
-has been published yet.
+**Physical bring-up in progress.** Connected ESP32-P4 rev3.2 with 32MB flash.
+The measured PHY address is **1**, not the initial schematic-derived assumption 0.
+Ethernet (100Mb/s full duplex), DHCP, host ping, native API and MQTT restart have
+passed. See [TEST_RESULTS.md](TEST_RESULTS.md) for OTA and remaining GPIO/power gates.
+Publication to `codex-hil/esphome-p4-eth` remains deferred until acceptance.
 
 Base functionality: Ethernet/DHCP, UART logging, encrypted native API,
 authenticated OTA, MQTT diagnostics and restart, and safe mode. No Wi-Fi,
@@ -59,8 +59,9 @@ Do not change pin assignments based on examples for a different board.
 
 Compare inventory before/after plugging in. Match physical PCB markings and the
 CH343 bridge to a stable `/dev/serial/by-id/...` (or uniquely verified `by-path`)
-path, record VID/PID, serial/interface, PCB revision and PoE module. The currently
-attached CP2102 and FT2232 are other devices: never use enumeration order.
+path, record VID/PID, serial/interface, PCB revision and PoE module. The attached P4 bridge is `1a86:55d3`, serial `5C93016778`,
+`/dev/serial/by-id/usb-1a86_USB_Single_Serial_5C93016778-if00`. The
+CP2102 and FT2232 are other devices: never use enumeration order.
 Only after identifying the P4:
 
 ```bash

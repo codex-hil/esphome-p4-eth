@@ -1,58 +1,77 @@
-# Test results
+# Test results — 2026-09-29
 
-Status: **PREPARATION COMPLETE / PHYSICAL ACCEPTANCE PENDING**.
-As of 2026-09-28 the user has not connected the Waveshare ESP32-P4-ETH; connection
-is planned for tomorrow. No hardware pass can be inferred from these builds.
+Status: **ETHERNET/SERVICES WORKING; PHYSICAL ACCEPTANCE INCOMPLETE**.
+The connected board runs `bringup-002`, reached independently at 192.168.2.14.
+No claim of GPIO, cold-start reliability, USB-independent or PoE operation is made.
 
 | Acceptance item | Result | Evidence / reason |
 |---|---|---|
-| ESPHome builds, production >=3.0 | PASS | logs/build-production.log; manifests/build-production.json |
-| ESPHome builds, engineering sample <3.0 | PASS | logs/build-es.log; manifests/build-es.json |
-| GPIO profile YAML validation | PASS | logs/config-gpio.log |
-| Rebuild from clean checkout/state | PASS | logs/clean-reproduction.log; manifests/build-clean.json; isolated checkout esphome-p4-eth-clean-20260928 |
-| USB flash | NOT RUN | Board absent |
-| Reliable boot and serial logger | NOT RUN | Board absent |
-| PHY initialization and link | NOT RUN | Board absent |
-| DHCP / host ping / neighbour | NOT RUN | Board absent |
-| Encrypted native API | NOT RUN | Host probe prepared; board absent |
-| MQTT availability, live state, command | NOT RUN | Host subscriber prepared; board absent |
-| Ethernet OTA + new live build value | NOT RUN | Board absent |
-| Physical GPIO2 voltage/action | NOT RUN | Candidate verified from schematic; instrument/wiring pending |
-| 10 cold starts | NOT RUN | Power arrangement pending |
-| USB-disconnected operation | NOT RUN | Independent supply pending |
-| PoE-only API/MQTT/OTA | NOT RUN | PD module + compatible PSE presence unknown |
+| ESPHome firmware builds | PASS | logs/ota-build-002.log; manifests/build-hardware-002.json |
+| Current clean checkout/state rebuild | IN PROGRESS | Prior preparation rebuild passed; rerunning with measured PHY address |
+| USB flash and verification | PASS | logs/usb_flash.log and logs/phy-address1-flash.log |
+| ROM/bootloader/app UART capture | PASS | logs/first_boot.log; logs/ethernet-boot.log |
+| IP101 identity and initialization | PASS after correction | MDIO 0243:0c54 at addr1; logs/mdio-scan-boot.log |
+| Ethernet link / negotiation | PASS | logs/ethernet-boot.log: 100Mb/s full duplex |
+| DHCP-assigned IPv4 | PASS | Dynamic config, Ethernet connected event: 192.168.2.14; no static IP configured |
+| Independent LAN ping / neighbour | PASS | logs/ethernet.log: 5/5 replies, MAC e8:f6:0a:e7:fe:3f on enp1s0 |
+| Encrypted native API + live build | PASS | logs/api-test-001.log and logs/ota_test.log |
+| MQTT live state/availability/restart | PASS | logs/mqtt-restart-final.log: offline → online, uptime reset, fresh build after reboot |
+| MQTT unexpected-loss Last Will | NOT RUN | Requires controlled loss of power/network; graceful shutdown tested |
+| Ethernet OTA + new running firmware | PASS | logs/ota_test.log: explicit IPv4 upload, API bringup-002; logs/mqtt-after-ota.log |
+| GPIO2 physical measurement | NOT RUN | No independent meter/analyzer wiring confirmed |
+| 10 true cold starts / reliability | NOT RUN | 0/10; no verified remotely controlled power setup |
+| USB-disconnected operation | NOT RUN | Independent power arrangement unconfirmed |
+| PoE-only boot/API/MQTT/OTA | NOT RUN | Populated PD and compatible PSE unconfirmed |
 
-Builds use public compile fixtures, not deployable credentials. The factory-image layout has also been checked against its bootloader, partition
-table, OTA data and app segments. Host mDNS discovery ran before connection and
-observed no ESPHome service (not a device-test result). The host scripts
-have been checked for imports/CLI operation only; their real-device behaviour
-remains unvalidated until executed against the board. No source patches/external
-components. Configuration choices are documented in docs/SUPPORT.md.
+## Observed hardware and software
 
-## Hardware report (fill from observations)
-
-| Field | Current evidence |
+| Field | Evidence |
 |---|---|
-| Exact hardware physically detected | None: no P4 connected |
-| Expected board | Waveshare ESP32-P4-ETH; schematic drawing rev1.1 |
-| Actual PCB/chip revision | Unknown |
-| ESPHome / ESP-IDF | 2026.9.0 / 5.5.5 |
-| Compiler | RISC-V GCC 14.2.0 / esp-14.2.0_20260121 |
-| PHY configuration | IP101, addr0, MDC31, MDIO52, REF_CLK50 input, reset51; not measured |
-| Flash / PSRAM | Nominal 32MB / 32MB from official documentation; ROM verification pending |
-| Firmware flash address space | 16MB, two OTA slots; PSRAM not enabled |
-| DHCP IP / MAC | Not obtained |
-| USB VID/PID/path | Not observed; expected CH343 UART bridge |
-| GPIO actually tested | None; candidate GPIO2/P1 contact15 |
-| OTA / MQTT result | NOT RUN / NOT RUN |
-| Cold starts / USB-independent result | 0/10 / NOT RUN |
-| PoE-only result | NOT RUN; hardware/source availability unknown |
-| Remaining issues | Physical identity, service/network tests, GPIO observation, power/PoE tests |
+| Board | User-designated Waveshare ESP32-P4-ETH; bridge/SoC/PHY match; PCB revision not visually confirmed |
+| SoC | ESP32-P4 revision **3.2**, 400MHz, ROM eco7-20260109 |
+| Flash | ROM detected **32MB**, manufacturer c8, device 4019 |
+| PSRAM | 32MB specified for expected part; not enabled or physically tested |
+| ESPHome / ESP-IDF | **2026.9.0 / 5.5.5** |
+| Compiler / esptool | RISC-V GCC 14.2.0 esp-14.2.0_20260121 / 5.3.1 |
+| PHY | **IP101**, measured addr **1**, ID registers **0243:0c54** |
+| Wiring | MDC31, MDIO52, REF_CLK50 input from PHY, reset51 |
+| Network | **192.168.2.14**, MAC **E8:F6:0A:E7:FE:3F**, 100Mb/s full duplex |
+| USB | CH343-family bridge **1a86:55d3**, serial **5C93016778**, interface00 |
+| Serial path | /dev/serial/by-id/usb-1a86_USB_Single_Serial_5C93016778-if00 → ttyACM0 |
+| GPIO actually tested | None; candidate GPIO2, P1 contact15 |
+| MQTT broker | Authenticated test Mosquitto on host **192.168.2.107:1884**, restricted topic ACL |
+| Firmware | bringup-002, 16MB address space with two OTA slots; private credentials local |
+| Source patches in final firmware | **None**; temporary read-only diagnostic patch fully reverted |
+| Cold starts / no-USB / PoE | **NOT RUN**, physical actions/equipment pending |
 
-Host baseline: CP2102 10c4:ea60 and FT2232 0403:6010 are already attached other
-hardware; neither has been accessed/reset for this task. Host enp1s0 reports link
-UP; this does not prove a link to the absent board. Raw inventory is local in
-logs/host_inventory.log. No new P4 USB VID/PID is asserted.
+## Investigation and evidence limits
+
+The initial schematic-derived PHY address 0 failed: `power up timeout` followed
+by `init phy failed`. This remains in the full first_boot.log; it is not hidden.
+A read-only MDIO scan found exactly one PHY at address 1; all other addresses
+returned ffff:ffff. Changing only phy_addr to 1 resolved initialization. The scan
+patch was removed before the successful Ethernet and OTA builds. The physical
+reason for the PDF/board discrepancy is not established; no random pin changes
+or delay workarounds were used. See patches/README.md.
+
+Serial opening plus the explicitly requested RTS reset can produce an initial
+partial boot followed by the complete captured boot. These are intentional resets,
+not demonstrated intermittent cold-boot failures. ROM POWERON reset reason alone
+does not prove supply was removed; therefore no reset is counted as a cold cycle.
+
+API tests authenticate using the private Noise key and read the build entity.
+MQTT tests reject retained-only evidence, match MAC/build, and require offline,
+online, lower uptime and a fresh post-reboot build after the command. OTA transferred
+in approximately 2 seconds; upload success was followed by API/MQTT confirmation
+of bringup-002. Topic captures are in mqtt-observation.log. Host credentials and
+firmware remain ignored by Git. First preparation build manifests are historical
+compile-only fixtures; build-hardware-002.json identifies the deployed image.
+
+Safe mode is configured, but deliberate repeated-failed-boot activation has not
+been tested. PSRAM and unused peripheral buses are outside the demonstrated scope.
+The other CP2102/FT2232 devices were not reset, flashed or used in this task.
+No eFuses/security settings were modified. Existing dialout membership was
+activated in a child via `sg`; host permissions were not changed.
 
 ## Cold-start evidence table
 
@@ -74,14 +93,13 @@ count. Record file/timestamp references and investigate every intermittent failu
 | 9 | — | — | — | — | — | — | NOT RUN |
 | 10 | — | — | — | — | — | — | NOT RUN |
 
-## Next session
+## Remaining physical work
 
-1. Compare USB inventory; identify actual PCB/PoE population and stable serial path.
-2. Read ROM chip revision/flash ID; select production vs ES, confirm schematic match.
-3. Generate local credentials, set broker, rebuild and flash; capture complete boot.
-4. Validate Ethernet independently, native API and MQTT including observable restart.
-5. Change build label, OTA via explicit IPv4, verify new live API/MQTT value.
-6. Measure GPIO2 HIGH/LOW independently, then return to final base profile.
-7. Complete cold starts and independent-power/PoE-only tests as applicable.
-8. Record final configuration/identity, clean rebuild, review secrets, publish repository
-   on `codex-hil` only after acceptance. No publication has occurred yet.
+1. Confirm PCB silkscreen revision, PoE module/source and GPIO2 test wiring.
+2. Measure GPIO2 HIGH/LOW with an independent instrument using the optional test profile.
+3. Remove all supply power for 10 genuine cold starts; record each boot and services.
+4. Test independent power with USB disconnected; if PoE is available, repeat including OTA using Ethernet cable only.
+5. Finalize the base configuration and publish the requested repository after applicable acceptance gates pass.
+
+No GitHub publication has occurred. Access to account codex-hil is available;
+publication is deferred because the user requested it after completion.

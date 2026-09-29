@@ -1,6 +1,6 @@
 substitutions:
   device_name: p4-eth
-  build_label: bringup-001
+  build_label: bringup-002
   # Select from esptool chip-id before flashing. This default is NOT detection.
   engineering_sample: 'false'
   cpu_frequency: 400MHz

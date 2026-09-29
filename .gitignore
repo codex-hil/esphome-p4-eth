@@ -6,4 +6,3 @@ secrets.yaml
 __pycache__/
 logs/*
 !logs/README.md
-!logs/*.pending

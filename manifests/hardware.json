@@ -1,0 +1,35 @@
+{
+  "board": "Waveshare ESP32-P4-ETH (user-designated; PCB silkscreen revision pending)",
+  "chip": "ESP32-P4",
+  "chip_revision": "3.2",
+  "rom_mac": "e8:f6:0a:e7:fe:3f",
+  "flash": {
+    "manufacturer": "0xc8",
+    "device": "0x4019",
+    "detected_mb": 32,
+    "configured_mb": 16
+  },
+  "usb": {
+    "vid": "1a86",
+    "pid": "55d3",
+    "serial": "5C93016778",
+    "interface": "00",
+    "port": "/dev/serial/by-id/usb-1a86_USB_Single_Serial_5C93016778-if00",
+    "kernel_port": "ttyACM0"
+  },
+  "phy": {
+    "type": "IP101",
+    "address_observed": 1,
+    "id1": "0x0243",
+    "id2": "0x0c54",
+    "mdc": 31,
+    "mdio": 52,
+    "reset": 51,
+    "ref_clk": 50,
+    "clock_direction": "PHY to MAC"
+  },
+  "psram": "32MB per part specification; not enabled or physically tested",
+  "poe": "module and PSE unconfirmed",
+  "gpio_test": "NOT_RUN",
+  "cold_cycles": 0
+}

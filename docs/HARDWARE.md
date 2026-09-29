@@ -1,4 +1,4 @@
-# Hardware evidence — physical board still pending
+# Hardware evidence — physical bring-up 2026-09-29
 
 Sources inspected on 2026-09-28:
 
@@ -9,15 +9,15 @@ Sources inspected on 2026-09-28:
 - [ESPHome ESP32](https://esphome.io/components/esp32/)
 
 The PDF PCB drawing says **Rev1.1**. This does not identify the user's board revision.
-The assembled board, its populated PoE module, chip revision and flash ID must be
-recorded after connection. A USB descriptor alone cannot prove the board model.
+The connected chip is rev3.2, ROM flash ID c8:4019, 32MB. PCB silkscreen revision
+and populated PoE module still need physical confirmation. A USB descriptor alone cannot prove the board model.
 
 | Item | Schematic-derived configuration | Physical observation |
 |---|---|---|
 | SoC | U6 ESP32-P4NRW32, 32MB stacked PSRAM | Pending |
 | Flash | U7 GD25Q256 = 32MB | Pending ROM flash-id |
 | PHY | U10 IP101GRI, RMII | Pending PHY identity/init |
-| Address | 0: PHY_AD0 and PHY_AD3 pulled to GND by R65/R63 | Pending |
+| Address | Initially inferred as 0 from R65/R63 in the PDF | **Measured 1**, ID registers 0243:0c54; address 0 is absent |
 | MDC / MDIO | GPIO31 / GPIO52 | Pending |
 | REF_CLK | GPIO50, 50MHz from IP101 pin 14 to P4, CLK_EXT_IN | Pending |
 | PHY reset | GPIO51 to active-low RESET pin 32 | Pending |
@@ -37,9 +37,10 @@ Do not use BOOT as a GPIO test: it shares GPIO35 with RMII TXD1.
 
 Vendor example Kconfig defaults to PHY address 1, and its CI file uses classic
 ESP32 pins 23/18/5. Those are generic example defaults, not this PCB's assignments.
-The schematic straps support address 0. If the attached revision disagrees,
-inspect populated straps and read MDIO PHY IDs before changing the address;
-record the observation rather than trying arbitrary configurations.
+The initial PDF interpretation suggested address 0, but the actual attached board
+responds only at address 1. The full read-only MDIO scan is preserved. Final YAML
+uses the measured address 1. The physical cause of the schematic/board discrepancy
+is not established; do not claim a specific strap-population change without inspection.
 
 Initial firmware uses only the first 16MB of physical flash. ESPHome rejects
 32MB+OTA without the IDF experimental option; no experimental option is enabled.

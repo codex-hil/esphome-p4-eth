@@ -60,9 +60,9 @@ try:
         result = client.publish(prefix + '/command/restart', 'PRESS', qos=1, retain=False)
         result.wait_for_publish(timeout=10)
         offline = wait_for(topic('/availability', 'offline', live=True), start)
-        wait_for(topic('/availability', 'online', live=True), offline['time'])
-        wait_for(lambda m: topic('/diagnostics/uptime', live=True)(m) and float(m['payload']) < float(old['payload']), start)
-        wait_for(topic('/diagnostics/build', a.expect_build, live=True), start)
+        online = wait_for(topic('/availability', 'online', live=True), offline['time'])
+        wait_for(lambda m: topic('/diagnostics/uptime', live=True)(m) and float(m['payload']) < float(old['payload']), online['time'])
+        wait_for(topic('/diagnostics/build', a.expect_build, live=True), online['time'])
     print(json.dumps({'mqtt': 'PASS', 'restart_test': a.restart}), flush=True)
 finally:
     client.disconnect()

@@ -40,5 +40,7 @@ Findings during software preparation:
 4. IDF production minimum defaults to 3.1; explicitly select 3.0 to avoid rejecting
    a production rev3.0 board. No eFuses are touched by this compile-time selection.
 
-No ESPHome/ESP-IDF source patches or external components are presently required.
-This is a source/build finding, not a statement that hardware has passed.
+Final firmware needs no source patches or external components. A temporary
+read-only MDIO scan patch diagnosed the wrong PHY address on 2026-09-29 and was
+removed before the successful Ethernet build. See patches/README.md. Physical
+Ethernet/API/MQTT results are in TEST_RESULTS.md; remaining hardware gates are separate.

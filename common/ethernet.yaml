@@ -4,7 +4,8 @@ ethernet:
   type: IP101
   mdc_pin: GPIO31
   mdio_pin: GPIO52
-  phy_addr: 0
+  # Measured 2026-09-29: MDIO ID1=0x0243, ID2=0x0c54 at address 1.
+  phy_addr: 1
   power_pin: GPIO51
   clk:
     pin: GPIO50

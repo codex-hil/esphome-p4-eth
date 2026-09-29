@@ -1,0 +1,17 @@
+--- a/components/esp_eth/src/esp_eth.c
++++ b/components/esp_eth/src/esp_eth.c
+@@ -248,6 +248,14 @@
+     phy->reset_hw(phy);
+     // init MAC first, so that MAC can generate the correct SMI signals
+     ESP_GOTO_ON_ERROR(mac->init(mac), err, TAG, "init mac failed");
++    // Bring-up-only read-only MDIO scan after MAC initialization.
++    for (uint32_t address = 0; address < 32; address++) {
++        uint32_t id1 = 0, id2 = 0;
++        esp_err_t e1 = mac->read_phy_reg(mac, address, 2, &id1);
++        esp_err_t e2 = mac->read_phy_reg(mac, address, 3, &id2);
++        ESP_LOGE(TAG, "MDIO_SCAN addr=%lu id1=0x%04lx id2=0x%04lx err=%d/%d",
++                 (unsigned long) address, (unsigned long) id1, (unsigned long) id2, e1, e2);
++    }
+     ESP_GOTO_ON_ERROR(phy->init(phy), err, TAG, "init phy failed");
+     // get default status of PHY autonegotiation (ultimately may also indicate if it is supported)
+     ESP_GOTO_ON_ERROR(phy->autonego_ctrl(phy, ESP_ETH_PHY_AUTONEGO_G_STAT, &eth_driver->auto_nego_en),

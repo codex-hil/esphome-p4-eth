@@ -6,6 +6,7 @@ import time
 import serial
 p = argparse.ArgumentParser()
 p.add_argument('port', help='Verified stable /dev/serial/by-id or by-path path')
+p.add_argument('--reset', action='store_true', help='Reset through the verified bridge after capture opens')
 p.add_argument('--seconds', type=float, default=120)
 p.add_argument('--output', default='logs/first_boot.log')
 a = p.parse_args()
@@ -17,9 +18,12 @@ uart.rts = False
 uart.port = a.port
 uart.open()
 try:
-    print('Capturing. Press RST now for complete ROM + bootloader + app log.', file=sys.stderr)
+    print('Capturing complete ROM + bootloader + app log; reset requested=' + str(a.reset), file=sys.stderr)
     end = time.monotonic() + a.seconds
     with Path(a.output).open('xb') as output:
+        if a.reset:
+            from esptool.reset import HardReset
+            HardReset(uart)()
         while time.monotonic() < end:
             data = uart.read(uart.in_waiting or 1)
             if data:
