@@ -8,5 +8,6 @@
   "vendor_examples_revision": "6f78fa810ec505048c1941e3d09cefc9f29129bd",
   "esphome": "2026.9.0",
   "esp_idf": "5.5.5",
-  "hardware_status": "NOT_CONNECTED"
+  "hardware_status": "NETWORK_SERVICES_VERIFIED_PHYSICAL_GATES_PENDING",
+  "physical_evidence": "manifests/hardware.json"
 }

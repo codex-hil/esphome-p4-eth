@@ -15,14 +15,14 @@ and populated PoE module still need physical confirmation. A USB descriptor alon
 | Item | Schematic-derived configuration | Physical observation |
 |---|---|---|
 | SoC | U6 ESP32-P4NRW32, 32MB stacked PSRAM | Pending |
-| Flash | U7 GD25Q256 = 32MB | Pending ROM flash-id |
-| PHY | U10 IP101GRI, RMII | Pending PHY identity/init |
+| Flash | U7 GD25Q256 = 32MB | ROM: c8:4019, 32MB |
+| PHY | U10 IP101GRI, RMII | ID 0243:0c54; init and 100Mb/s full-duplex link PASS |
 | Address | Initially inferred as 0 from R65/R63 in the PDF | **Measured 1**, ID registers 0243:0c54; address 0 is absent |
 | MDC / MDIO | GPIO31 / GPIO52 | Pending |
 | REF_CLK | GPIO50, 50MHz from IP101 pin 14 to P4, CLK_EXT_IN | Pending |
 | PHY reset | GPIO51 to active-low RESET pin 32 | Pending |
 | RMII data | TXD0=34, TXD1=35, TX_EN=49, RXD0=29, RXD1=30, CRS_DV=28 | Pending |
-| USB programming | H2 Type-C → U4 CH343P → UART0, TX37/RX38 | VID/PID/path pending |
+| USB programming | H2 Type-C → U4 CH343P → UART0, TX37/RX38 | 1a86:55d3, serial 5C93016778; flash and UART capture PASS |
 | BOOT / RESET | GPIO35 / ESP_EN | Pending |
 | LED1 | Supply indicator, not a programmable GPIO LED | Pending |
 | GPIO test candidate | GPIO2, P1 schematic contact **15**, silkscreen `2` | Not yet tested |

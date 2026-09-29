@@ -7,7 +7,7 @@ No claim of GPIO, cold-start reliability, USB-independent or PoE operation is ma
 | Acceptance item | Result | Evidence / reason |
 |---|---|---|
 | ESPHome firmware builds | PASS | logs/ota-build-002.log; manifests/build-hardware-002.json |
-| Current clean checkout/state rebuild | IN PROGRESS | Prior preparation rebuild passed; rerunning with measured PHY address |
+| Current clean checkout/state rebuild | PASS | logs/clean-reproduction-20260929.log; manifests/build-clean-20260929.json; committed source 8b157ab, fresh state, public compile fixture |
 | USB flash and verification | PASS | logs/usb_flash.log and logs/phy-address1-flash.log |
 | ROM/bootloader/app UART capture | PASS | logs/first_boot.log; logs/ethernet-boot.log |
 | IP101 identity and initialization | PASS after correction | MDIO 0243:0c54 at addr1; logs/mdio-scan-boot.log |
@@ -16,6 +16,7 @@ No claim of GPIO, cold-start reliability, USB-independent or PoE operation is ma
 | Independent LAN ping / neighbour | PASS | logs/ethernet.log: 5/5 replies, MAC e8:f6:0a:e7:fe:3f on enp1s0 |
 | Encrypted native API + live build | PASS | logs/api-test-001.log and logs/ota_test.log |
 | MQTT live state/availability/restart | PASS | logs/mqtt-restart-final.log: offline → online, uptime reset, fresh build after reboot |
+| MQTT reconnect after broker restart | PASS | logs/mqtt-service-reconnect.log: recovered at uptime184, no device reboot |
 | MQTT unexpected-loss Last Will | NOT RUN | Requires controlled loss of power/network; graceful shutdown tested |
 | Ethernet OTA + new running firmware | PASS | logs/ota_test.log: explicit IPv4 upload, API bringup-002; logs/mqtt-after-ota.log |
 | GPIO2 physical measurement | NOT RUN | No independent meter/analyzer wiring confirmed |
@@ -39,7 +40,7 @@ No claim of GPIO, cold-start reliability, USB-independent or PoE operation is ma
 | USB | CH343-family bridge **1a86:55d3**, serial **5C93016778**, interface00 |
 | Serial path | /dev/serial/by-id/usb-1a86_USB_Single_Serial_5C93016778-if00 → ttyACM0 |
 | GPIO actually tested | None; candidate GPIO2, P1 contact15 |
-| MQTT broker | Authenticated test Mosquitto on host **192.168.2.107:1884**, restricted topic ACL |
+| MQTT broker | Authenticated test Mosquitto on host **192.168.2.107:1884**, restricted topic ACL; user service p4-eth-test-mqtt (not enabled at host boot) |
 | Firmware | bringup-002, 16MB address space with two OTA slots; private credentials local |
 | Source patches in final firmware | **None**; temporary read-only diagnostic patch fully reverted |
 | Cold starts / no-USB / PoE | **NOT RUN**, physical actions/equipment pending |

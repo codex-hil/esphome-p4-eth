@@ -171,7 +171,7 @@ mkdir -p .state/broker
 chmod 700 .state/broker
 ./scripts/nix-exec.sh mosquitto_passwd -c .state/broker/passwd p4-test
 # Replace HOST_LAN_IP with this host's actual LAN address (not 0.0.0.0).
-printf 'listener 1883 HOST_LAN_IP\nallow_anonymous false\npassword_file %s/.state/broker/passwd\n' \
+printf 'listener 1884 HOST_LAN_IP\nallow_anonymous false\npassword_file %s/.state/broker/passwd\n' \
   "$PWD" > .state/broker/mosquitto.conf
 ./scripts/nix-exec.sh mosquitto -c .state/broker/mosquitto.conf -v
 ```
@@ -250,3 +250,29 @@ scan tracked content for secrets. Then create the requested GitHub repository
 on the authorized `codex-hil` account. Do not publish firmware/credentials/raw LAN
 captures. User requested publication after completion, so it is deferred while
 physical tests are pending.
+
+## Current local deployment (2026-09-29)
+
+Device: 192.168.2.14, MAC E8:F6:0A:E7:FE:3F, production rev3.2,
+bringup-002. USB uses `/dev/serial/by-id/usb-1a86_USB_Single_Serial_5C93016778-if00`.
+Current secrets are private; **do not run the compile-fixture replacement steps
+against the active deployment unless intentionally rotating credentials**.
+
+A separate authenticated broker runs on 192.168.2.107:1884; the pre-existing
+laboratory broker on 1883 was left untouched. The project broker is managed by
+`systemctl --user status p4-eth-test-mqtt.service`; its private config is
+`.state/broker/mosquitto.conf`. It runs independently of the terminal, but is
+intentionally not enabled for host boot. Start/stop via `systemctl --user
+start p4-eth-test-mqtt.service` / `systemctl --user stop p4-eth-test-mqtt.service`.
+Broker credentials and test logs are local. Use your intended production broker
+by editing secrets.yaml and rebuilding/updating OTA.
+
+For this host, activate the administrator-already-granted serial group with:
+
+```bash
+sg dialout -c './scripts/esphome logs device.yaml --device /dev/serial/by-id/usb-1a86_USB_Single_Serial_5C93016778-if00'
+```
+
+Do not infer a power-cycle from the ROM POWERON reason after an RTS reset.
+The diagnostic MDIO scan is archived under patches/ but is not applied to final
+firmware. Full clean reproduction has passed again with the corrected PHY address.

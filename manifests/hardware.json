@@ -31,5 +31,14 @@
   "psram": "32MB per part specification; not enabled or physically tested",
   "poe": "module and PSE unconfirmed",
   "gpio_test": "NOT_RUN",
-  "cold_cycles": 0
+  "cold_cycles": 0,
+  "ip": "192.168.2.14",
+  "ethernet_mac": "e8:f6:0a:e7:fe:3f",
+  "speed_mbps": 100,
+  "duplex": "full",
+  "firmware": "bringup-002",
+  "api": "PASS encrypted native API and live build",
+  "ota": "PASS explicit IPv4 Ethernet update 001 to 002, reboot, API and MQTT verification",
+  "mqtt": "PASS authenticated availability/live diagnostics/observable restart",
+  "broker_service": "p4-eth-test-mqtt.service, user, running, not enabled at boot"
 }

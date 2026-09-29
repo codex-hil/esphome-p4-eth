@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-29",
+  "scope": "USB/Ethernet/API/MQTT/OTA; GPIO and cold/independent power pending",
+  "clean_source_commit": "8b157ab",
+  "logs_sha256": {
+    "chip_identity.log": "3df1b1853047702b7467944a961eb8a4f0ec240fc4ae6226372603a3ab06c435",
+    "usb_flash.log": "b43de8ab1725d2b232736e944c2d3cbee6051e13568e40defdabf1fc3fb49b4b",
+    "first_boot.log": "711a509c51ffa56dd194fc917c80db94e6de225ed798edb0f45627d9bd06faf5",
+    "mdio-scan-boot.log": "a94c77d34f485224c8394564d9d82794cb16c324f83817fa717dd1847cc81ce6",
+    "phy-address1-flash.log": "63e7551b14934146c78293aac2cac6f4cf5e071e64d1221a3330ac53d5cc1e82",
+    "ethernet-boot.log": "e4cccbcc769232795a14c30e685e5d32ca175da1f0796d5465d4f064a0dce604",
+    "ethernet.log": "2eb447e08a9bb6081d25e9e24fd7428690d0aab894f5eff60c7c934b38ebd008",
+    "api-test-001.log": "86bb3a3f7a144d736752a58d5239077feddd9a3d0f74852ee982c78563ee3ea7",
+    "mqtt-restart-final.log": "c2a9ce77e15bc885bfc4adf1bded389c25fbeb8283148d6cbdf7bc4adeea50d9",
+    "ota_test.log": "312d9a4b8a1fc27ba664d733c1b50198fb03436b949ad29247f2218cc68ba4ff",
+    "mqtt-after-ota.log": "4caf44065e68216c2237fbaf85f2ab0f9f141b50936de7197f1a12a0cda74705",
+    "clean-reproduction-20260929.log": "dd55df9f1735bac3aa30b6078d1f85f7112c4bb7e093658673594d9af0c9c2c3",
+    "mqtt-service-reconnect.log": "f2407c8eae8cd20e3efc375ca2c5885e63e8dc843a9553b45874b15defdcffa9",
+    "final-api-check.log": "0f4e48b64efa5aaaa3ea55cfdbab50cd977d0e445485f54faee76c5e35050199"
+  }
+}
