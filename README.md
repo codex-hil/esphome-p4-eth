@@ -276,3 +276,7 @@ sg dialout -c './scripts/esphome logs device.yaml --device /dev/serial/by-id/usb
 Do not infer a power-cycle from the ROM POWERON reason after an RTS reset.
 The diagnostic MDIO scan is archived under patches/ but is not applied to final
 firmware. Full clean reproduction has passed again with the corrected PHY address.
+
+Current measurement stage: temporary `gpio-test-003` is installed, GPIO2 set LOW
+and awaiting the user's meter readings. `device.yaml` remains the generic base.
+Do not mark GPIO as passed from its MQTT state alone; restore base after measuring.

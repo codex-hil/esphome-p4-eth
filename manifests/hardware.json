@@ -1,5 +1,5 @@
 {
-  "board": "Waveshare ESP32-P4-ETH (user-designated; PCB silkscreen revision pending)",
+  "board": "Waveshare ESP32-P4-ETH (front silkscreen confirmed in user photographs)",
   "chip": "ESP32-P4",
   "chip_revision": "3.2",
   "rom_mac": "e8:f6:0a:e7:fe:3f",
@@ -30,15 +30,31 @@
   },
   "psram": "32MB per part specification; not enabled or physically tested",
   "poe": "module and PSE unconfirmed",
-  "gpio_test": "NOT_RUN",
+  "gpio_test": "GPIO2 configured output LOW/ALWAYS_OFF; MQTT OFF and native API profile verified; independent LOW/HIGH measurements pending",
   "cold_cycles": 0,
   "ip": "192.168.2.14",
   "ethernet_mac": "e8:f6:0a:e7:fe:3f",
   "speed_mbps": 100,
   "duplex": "full",
-  "firmware": "bringup-002",
+  "firmware": "gpio-test-003 (temporary GPIO measurement profile)",
   "api": "PASS encrypted native API and live build",
   "ota": "PASS explicit IPv4 Ethernet update 001 to 002, reboot, API and MQTT verification",
   "mqtt": "PASS authenticated availability/live diagnostics/observable restart",
-  "broker_service": "p4-eth-test-mqtt.service, user, running, not enabled at boot"
+  "broker_service": "p4-eth-test-mqtt.service, user, running, not enabled at boot",
+  "visual_inspection": {
+    "board_model": "Waveshare ESP32-P4-ETH",
+    "pcb_revision": "not legible in supplied photographs",
+    "poe": "H7 six-pin header appears empty; no mounted PD converter visible; independent PSU/source still to be specified",
+    "gpio2": "label 2 visible above SCL on front left edge; no attached peripheral visible",
+    "images": [
+      {
+        "name": "1000014586.jpg",
+        "sha256": "36c778f8f03fb16dc87500d67567b585a1c32e018f77b6eee78bc632fc6065f3"
+      },
+      {
+        "name": "1000014585.jpg",
+        "sha256": "623db4d0b7359bc1a39ce254f0a9c1f6eee00b4af03c9f9ef1ea461e1ce24eed"
+      }
+    ]
+  }
 }

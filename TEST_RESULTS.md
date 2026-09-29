@@ -1,7 +1,8 @@
 # Test results — 2026-09-29
 
 Status: **ETHERNET/SERVICES WORKING; PHYSICAL ACCEPTANCE INCOMPLETE**.
-The connected board runs `bringup-002`, reached independently at 192.168.2.14.
+The base bringup-002 passed network acceptance. The board currently runs the
+temporary `gpio-test-003` profile at 192.168.2.14, awaiting physical GPIO readings.
 No claim of GPIO, cold-start reliability, USB-independent or PoE operation is made.
 
 | Acceptance item | Result | Evidence / reason |
@@ -19,7 +20,7 @@ No claim of GPIO, cold-start reliability, USB-independent or PoE operation is ma
 | MQTT reconnect after broker restart | PASS | logs/mqtt-service-reconnect.log: recovered at uptime184, no device reboot |
 | MQTT unexpected-loss Last Will | NOT RUN | Requires controlled loss of power/network; graceful shutdown tested |
 | Ethernet OTA + new running firmware | PASS | logs/ota_test.log: explicit IPv4 upload, API bringup-002; logs/mqtt-after-ota.log |
-| GPIO2 physical measurement | NOT RUN | No independent meter/analyzer wiring confirmed |
+| GPIO2 physical measurement | PENDING | gpio-test-003 installed by Ethernet OTA; API verified; MQTT OFF received; awaiting meter LOW/HIGH readings and instrument model |
 | 10 true cold starts / reliability | NOT RUN | 0/10; no verified remotely controlled power setup |
 | USB-disconnected operation | NOT RUN | Independent power arrangement unconfirmed |
 | PoE-only boot/API/MQTT/OTA | NOT RUN | Populated PD and compatible PSE unconfirmed |
@@ -28,7 +29,7 @@ No claim of GPIO, cold-start reliability, USB-independent or PoE operation is ma
 
 | Field | Evidence |
 |---|---|
-| Board | User-designated Waveshare ESP32-P4-ETH; bridge/SoC/PHY match; PCB revision not visually confirmed |
+| Board | **Waveshare ESP32-P4-ETH** confirmed by user front/rear photographs; PCB revision unreadable |
 | SoC | ESP32-P4 revision **3.2**, 400MHz, ROM eco7-20260109 |
 | Flash | ROM detected **32MB**, manufacturer c8, device 4019 |
 | PSRAM | 32MB specified for expected part; not enabled or physically tested |
@@ -104,3 +105,20 @@ count. Record file/timestamp references and investigate every intermittent failu
 
 No GitHub publication has occurred. Access to account codex-hil is available;
 publication is deferred because the user requested it after completion.
+
+## Photograph and GPIO preparation update
+
+User photographs confirm the product silkscreen and show unused exposed GPIO
+pads. The front six-pin PoE header appears unoccupied; no mounted PD converter
+is visible. This does not establish what separate equipment the user has.
+
+Temporary profile `device-gpio-test.yaml` with substitution `build_label=gpio-test-003`
+was compiled and uploaded over Ethernet; API and fresh MQTT confirm it runs.
+GPIO2 reports OFF, restore mode ALWAYS_OFF. This is software state only: no
+independent voltage reading has yet been supplied. The user was asked to measure
+pad `2` (above SCL, not 24/25) relative to GND. Hold LOW until that reading arrives,
+then command HIGH, obtain a second reading and return LOW. Restore the base
+profile after the measurement before cold-start/independent-power acceptance.
+Evidence: logs/gpio-ota-003.log, logs/gpio-api-003.log,
+logs/gpio-mqtt-observation.log and logs/gpio_test.log. Firmware/private photos
+are not committed; photograph hashes are recorded in manifests/hardware.json.
