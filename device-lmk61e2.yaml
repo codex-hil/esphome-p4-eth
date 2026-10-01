@@ -1,0 +1,94 @@
+packages:
+  base: !include device.yaml
+substitutions:
+  build_label: lmk61e2-ha-002
+external_components:
+  - source:
+      type: git
+      url: https://github.com/codex-hil/esphome-components
+      ref: 2b8ffce1fded42c8510adce9dbe1d71ddbb0c32a
+    components: [lmk61e2]
+i2c:
+  sda: GPIO7
+  scl: GPIO8
+  frequency: 100kHz
+  scan: true
+lmk61e2:
+  id: clock_generator
+  address: 0x59
+  frequency: 100MHz
+  output_format: LVPECL
+  output_enabled: true
+  allow_fractional: true
+  frequency_number:
+    name: Clock frequency
+    mode: box
+  format_select:
+    name: Clock output format
+  output_switch:
+    name: Clock output enabled
+  actual_frequency:
+    name: Clock nominal frequency
+  pll_ok:
+    name: Clock PLL status OK
+button:
+  - platform: template
+    name: Clock 10 MHz
+    on_press:
+      - lmk61e2.set_frequency:
+          id: clock_generator
+          frequency: 10MHz
+  - platform: template
+    name: Clock 20 MHz
+    on_press:
+      - lmk61e2.set_frequency:
+          id: clock_generator
+          frequency: 20MHz
+  - platform: template
+    name: Clock 25 MHz
+    on_press:
+      - lmk61e2.set_frequency:
+          id: clock_generator
+          frequency: 25MHz
+  - platform: template
+    name: Clock 50 MHz
+    on_press:
+      - lmk61e2.set_frequency:
+          id: clock_generator
+          frequency: 50MHz
+  - platform: template
+    name: Clock 80 MHz
+    on_press:
+      - lmk61e2.set_frequency:
+          id: clock_generator
+          frequency: 80MHz
+  - platform: template
+    name: Clock 100 MHz
+    on_press:
+      - lmk61e2.set_frequency:
+          id: clock_generator
+          frequency: 100MHz
+  - platform: template
+    name: Clock 122.88 MHz
+    on_press:
+      - lmk61e2.set_frequency:
+          id: clock_generator
+          frequency: 122.88MHz
+  - platform: template
+    name: Clock 125 MHz
+    on_press:
+      - lmk61e2.set_frequency:
+          id: clock_generator
+          frequency: 125MHz
+  - platform: template
+    name: Clock 156.25 MHz
+    on_press:
+      - lmk61e2.set_frequency:
+          id: clock_generator
+          frequency: 156.25MHz
+  - platform: template
+    name: Clock 200 MHz
+    on_press:
+      - lmk61e2.set_frequency:
+          id: clock_generator
+          frequency: 200MHz
