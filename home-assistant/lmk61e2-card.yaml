@@ -1,0 +1,19 @@
+# Replace entity IDs with the IDs assigned by your Home Assistant instance.
+type: entities
+title: Generator LMK61E2
+show_header_toggle: false
+entities:
+  - entity: number.p4_ethernet_controller_clock_frequency
+    name: Częstotliwość zadana (MHz)
+  - entity: sensor.p4_ethernet_controller_clock_nominal_frequency
+    name: Częstotliwość nominalna (MHz)
+  - entity: switch.p4_ethernet_controller_clock_output_enabled
+    name: Wyjście
+  - entity: select.p4_ethernet_controller_clock_output_format
+    name: Format wyjścia
+  - entity: binary_sensor.p4_ethernet_controller_clock_pll_status_ok
+    name: PLL OK
+  - entity: button.p4_ethernet_controller_clock_100_mhz
+    name: Ustaw 100 MHz
+  - entity: button.p4_ethernet_controller_clock_122_88_mhz
+    name: Ustaw 122,88 MHz

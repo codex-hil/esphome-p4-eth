@@ -282,3 +282,7 @@ firmware. Full clean reproduction has passed again with the corrected PHY addres
 Current measurement stage: temporary `gpio-test-003` is installed, GPIO2 set LOW
 and awaiting the user's meter readings. `device.yaml` remains the generic base.
 Do not mark GPIO as passed from its MQTT state alone; restore base after measuring.
+
+## LMK61E2 / Home Assistant
+
+[Gotowy projekt generatora i instrukcja HA](docs/LMK61E2_HOME_ASSISTANT.md): `device-lmk61e2.yaml`, nastawa MHz, format, enable, PLL i 10 presetów.

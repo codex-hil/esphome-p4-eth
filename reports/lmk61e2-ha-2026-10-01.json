@@ -1,0 +1,73 @@
+{
+  "transport": "ESP32-P4 direct I2C, GPIO7/GPIO8, address 0x59",
+  "tests": [
+    {
+      "requested_mhz": 125,
+      "nominal_mhz": 125.0,
+      "pll_ok": true,
+      "measurement": {
+        "frequency_hz": 125000257.44054668,
+        "median_frequency_hz": 124999999.99999999,
+        "vpp": 0.72,
+        "cycles": 249,
+        "preamble": {
+          "XINCR": "200.0000E-12",
+          "YMULT": "20.0000E-3",
+          "YZERO": "0.0E+0",
+          "YOFF": "-500.0000E-3"
+        },
+        "sample_count": 10000
+      },
+      "error_ppm": 2.0595243734877755,
+      "pass": true
+    },
+    {
+      "requested_mhz": 122.88,
+      "nominal_mhz": 122.87999725341797,
+      "pll_ok": true,
+      "measurement": {
+        "frequency_hz": 122880515.69527897,
+        "median_frequency_hz": 122873345.93572766,
+        "vpp": 0.74,
+        "cycles": 244,
+        "preamble": {
+          "XINCR": "200.0000E-12",
+          "YMULT": "20.0000E-3",
+          "YZERO": "0.0E+0",
+          "YOFF": "-500.0000E-3"
+        },
+        "sample_count": 10000
+      },
+      "error_ppm": 4.196738923933907,
+      "pass": true
+    }
+  ],
+  "restored": true,
+  "eeprom_writes": 0,
+  "msp430_commands": 0,
+  "firmware": "lmk61e2-ha-002",
+  "number_traits": {
+    "unit": "MHz",
+    "min": 10.0,
+    "max": 1000.0,
+    "step": 0.0001,
+    "mode": "1"
+  },
+  "preset_count": 10,
+  "scope": "TEKTRONIX,MSO4104,C020817,CF:91.1CT FV:v2.68 DPO4AUTO:V1.00 DPO4COMP:V1.00 DPO4USB:V1.00",
+  "disabled_vpp": 0.1,
+  "disabled_api_state": false,
+  "restored_measurement": {
+    "frequency_hz": 99998510.77068911,
+    "median_frequency_hz": 100000000.0,
+    "vpp": 0.68,
+    "cycles": 198,
+    "preamble": {
+      "XINCR": "200.0000E-12",
+      "YMULT": "20.0000E-3",
+      "YZERO": "0.0E+0",
+      "YOFF": "-500.0000E-3"
+    },
+    "sample_count": 10000
+  }
+}
